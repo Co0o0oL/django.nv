@@ -35,8 +35,10 @@ jobs:
     needs: prod
     runs-on: ubuntu-20.04
     steps:
-      - run: echo "Hello World" > hello.txt
-    uses: actions/upload-artifact@v3
+      - name: Create Artifact
+        run: echo "Hello World" > hello.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
           name: hello-artifact
           path: hello.txt
