@@ -16,6 +16,7 @@ jobs:
       - run: |
           pip install -r requirements.txt
           python manage.py test taskManager
+          
   release:
     machine: true                                        # What is this for?
     steps:
@@ -49,6 +50,7 @@ workflows:
     jobs:
       - build
       - test
+      - release
       - integration
       - prod:
           type: approval
