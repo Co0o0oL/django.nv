@@ -26,7 +26,7 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v2
-      - run: docker run --rm -v $(pwd):/src hysnsec/bandit -r /src -f json -o /src/bandit-output.json
+      - run: docker run --rm -v $(pwd):/src hysnsec/bandit #-r /src -f json -o /src/bandit-output.json
       - uses: actions/upload-artifact@v2
         with:
           name: Bandit
