@@ -25,7 +25,6 @@ jobs:
 
   test:
     runs-on: ubuntu-20.04
-    needs: build
     steps:
       - uses: actions/checkout@v2
 
@@ -43,7 +42,6 @@ jobs:
 
   integration:
     runs-on: ubuntu-20.04
-    needs: test
     steps:
       - run: echo "This is an integration step"
       - run: exit 1
@@ -51,6 +49,20 @@ jobs:
 
   prod:
     runs-on: ubuntu-20.04
-    needs: integration
     steps:
       - run: echo "This is a deploy step."
+
+
+  oast:
+    runs-on: ubuntu-20.04
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: docker run --rm -v $(pwd):/src hysnsec/safety check -r requirements.txt --json > oast-results.json
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Safety
+          path: oast-results.json
+        if: always()                        # what is this for?
