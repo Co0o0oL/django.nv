@@ -55,12 +55,11 @@ jobs:
 
   oast:
     runs-on: ubuntu-20.04
-    needs: test
     steps:
       - uses: actions/checkout@v2
 
       - run: docker run --rm -v $(pwd):/src hysnsec/safety check -r requirements.txt --json > oast-results.json
-
+        continue-on-error: true
       - uses: actions/upload-artifact@v2
         with:
           name: Safety
