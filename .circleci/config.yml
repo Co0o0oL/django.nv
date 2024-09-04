@@ -60,7 +60,7 @@ workflows:
   django:
     jobs:
       - build
-      - test:
-      - oast:
-      - integration:
-      - prod:
+      - test
+      - oast
+      - integration
+      - prod
