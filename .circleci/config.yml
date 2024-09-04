@@ -27,6 +27,16 @@ jobs:
             echo "This is an integration step"
             exit 1
 
+  oast-frontend:
+    machine: true
+    steps:
+      - checkout
+
+      - run: docker run --rm -v $(pwd):/src -w /src hysnsec/retire --outputformat json --outputpath retirejs-output.json --severity high
+
+      - store_artifacts:
+          path: retirejs-output.json
+          destination: retirejs-artifact          
   prod:
     docker:
       - image: python:3.6
@@ -42,3 +52,4 @@ workflows:
       - test
       - integration
       - prod
+      - oast-frontend
