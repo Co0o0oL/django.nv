@@ -53,7 +53,16 @@ workflows:
   django:
     jobs:
       - build
-      - test
-      - oast-frontend
-      - integration
-      - prod
+      - test:
+          requires:
+            - build
+      - oast-frontend:
+          requires:
+            - test
+      - integration:
+          requires:
+            - oast-frontend
+      - prod:
+          type: approval
+          requires:
+            - integration
