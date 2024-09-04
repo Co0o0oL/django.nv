@@ -43,17 +43,24 @@ jobs:
     steps:
       - checkout
       - run: echo "This is a 'deploy' step."
-      
+
+    oast:
+    machine: true
+    steps:
+      - checkout
+
+      - run: docker run -v $(pwd):/src --rm hysnsec/safety check -r /src/requirements.txt --json | tee oast-results.json
+
+      - store_artifacts:
+          path: oast-results.json
+          destination: safety-artifact
 
 workflows:
   version: 2
   django:
     jobs:
       - build
-      - test
-      - release
-      - integration
+      - test:
+      - oast:
+      - integration:
       - prod:
-          type: approval
-          requires:
-            - integration
