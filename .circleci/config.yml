@@ -22,8 +22,7 @@ jobs:
       - image: node:alpine3.10
     steps:
       - checkout
-      - env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      
       - run: 
           command: |
             echo $SNYK_TOKEN
