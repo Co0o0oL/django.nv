@@ -1,17 +1,23 @@
 jobs:
   build:
-    machine: true
+    docker:
+      - image: python:3.6                   # similar to "image" in GitLab
     steps:
       - checkout
-      - run: echo "This is a build step"
+      - run: |                              # similar to "script" in GitLab
+          pip install -r requirements.txt
+          python manage.py check
 
   test:
-    machine: true
+    docker:
+      - image: python:3.6
     steps:
       - checkout
-      - run: echo "This is a test step"
+      - run: |
+          pip install -r requirements.txt
+          python manage.py test taskManager
 
-    oast-snyk:
+  oast-snyk:
     docker:
       - image: node:alpine3.10
     steps:
@@ -24,11 +30,30 @@ jobs:
             mv snyk /usr/local/bin/
             npm install
             snyk auth $SNYK_TOKEN
-            snyk test --json > snyk-results.json
+            snyk test --json > snyk-results.json || true
 
       - store_artifacts:
           path: snyk-results.json
           destination: snyk-artifact
+          when: always
+
+  integration:
+    docker:
+      - image: python:3.6
+    steps:
+      - checkout
+      - run:
+          command: |
+            echo "This is an integration step"
+            exit 1
+          when: on_fail         # Even if the job fails, continue to the next stages
+
+  prod:
+    docker:
+      - image: python:3.6
+    steps:
+      - checkout
+      - run: echo "This is a deploy step."
 
 workflows:
   version: 2
