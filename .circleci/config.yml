@@ -54,6 +54,7 @@ jobs:
       - store_artifacts:
           path: oast-results.json
           destination: safety-artifact
+        when: always
 
 workflows:
   version: 2
