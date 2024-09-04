@@ -27,9 +27,5 @@ workflows:
   webgoat:
     jobs:
       - build
-      - test:
-          requires:
-            - build
-      - odc-backend:
-          requires:
-            - test
+      - test
+      - odc-backend
