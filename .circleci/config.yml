@@ -44,7 +44,7 @@ jobs:
       - checkout
       - run: echo "This is a 'deploy' step."
 
-    oast:
+  oast:
     machine: true
     steps:
       - checkout
