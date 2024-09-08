@@ -1,7 +1,7 @@
 name: Django                                  # workflow name
 
 on:
-  push:
+  push:                                       
     branches:                                 # similar to "only" in GitLab
       - main
 
@@ -50,8 +50,9 @@ jobs:
         with:
           name: semgrep
           path: semgrep-output.json
-        if: always()   
-        
+        continue-on-error: true             # allow the build to fail, similar to "allow_failure: true" in GitLab
+        if: always()                        # what is this for?
+
   integration:
     runs-on: ubuntu-20.04
     steps:
@@ -61,5 +62,6 @@ jobs:
 
   prod:
     runs-on: ubuntu-20.04
+    needs: integration
     steps:
       - run: echo "This is a deploy step."
