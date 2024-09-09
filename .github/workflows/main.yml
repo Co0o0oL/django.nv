@@ -8,7 +8,6 @@ on:
 jobs:
    zap_baseline:
     runs-on: ubuntu-20.04
-    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
