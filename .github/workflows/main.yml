@@ -8,7 +8,6 @@ on:
 jobs:
   zap_baseline:
     runs-on: ubuntu-20.04
-    needs: test
     steps:
       - run: |
            docker pull softwaresecurityproject/zap-stable:2.14.0
