@@ -52,6 +52,6 @@ workflows:
     jobs:
       - build
       - test
-      - zap_baseline
+      - nuclei
       - integration
       - prod
